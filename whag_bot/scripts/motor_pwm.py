@@ -1,80 +1,132 @@
 import RPi.GPIO as GPIO
 import time
 
+# Pin definitions for each motor
+front_left_a = 6
+front_left_b = 13
+front_left_en = 26
 
-right_motor_a = 24
-right_motor_b = 23
-right_motor_en = 25
+back_left_a = 19
+back_left_b = 16
+back_left_en = 20
 
-left_motor_a = 15
-left_motor_b = 14
-left_motor_en = 4
+front_right_a = 21
+front_right_b = 22
+front_right_en = 27
 
+back_right_a = 17
+back_right_b = 4
+back_right_en = 5
 
+# Set up GPIO mode
 GPIO.setmode(GPIO.BCM)
 
-GPIO.setup(right_motor_a , GPIO.OUT)
-GPIO.setup(right_motor_b , GPIO.OUT)
-GPIO.setup(right_motor_en , GPIO.OUT)
+# Set up motor pins as output
+motor_pins = [front_left_a, front_left_b, front_left_en, back_left_a, back_left_b, back_left_en, 
+              front_right_a, front_right_b, front_right_en, back_right_a, back_right_b, back_right_en]
 
-GPIO.setup(left_motor_a , GPIO.OUT)
-GPIO.setup(left_motor_b , GPIO.OUT)
-GPIO.setup(left_motor_en , GPIO.OUT)
+for pin in motor_pins:
+    GPIO.setup(pin, GPIO.OUT)
 
-pwm_r = GPIO.PWM(right_motor_en , 1000 )
-pwm_l = GPIO.PWM(left_motor_en , 1000 )
+# Initialize PWM for motor speed control
+pwm_fl = GPIO.PWM(front_left_en, 1000)
+pwm_bl = GPIO.PWM(back_left_en, 1000)
+pwm_fr = GPIO.PWM(front_right_en, 1000)
+pwm_br = GPIO.PWM(back_right_en, 1000)
 
-pwm_r.start(75)
-pwm_l.start(75)
+# Start PWM with 75% duty cycle
+pwm_fl.start(75)
+pwm_bl.start(75)
+pwm_fr.start(75)
+pwm_br.start(75)
 
+# Movement functions
 def forward(second):
-    print("forward Moving ")
-    GPIO.output(right_motor_a,GPIO.HIGH)
-    GPIO.output(right_motor_b,GPIO.LOW)
-    GPIO.output(left_motor_a,GPIO.HIGH)
-    GPIO.output(left_motor_b,GPIO.LOW)
+    print("Moving Forward")
+    # Front left and back left motors forward, front right and back right motors forward
+    GPIO.output(front_left_a, GPIO.HIGH)
+    GPIO.output(front_left_b, GPIO.LOW)
+    GPIO.output(back_left_a, GPIO.HIGH)
+    GPIO.output(back_left_b, GPIO.LOW)
+    
+    GPIO.output(front_right_a, GPIO.HIGH)
+    GPIO.output(front_right_b, GPIO.LOW)
+    GPIO.output(back_right_a, GPIO.HIGH)
+    GPIO.output(back_right_b, GPIO.LOW)
     time.sleep(second)
 
-def reverse(second):
-    print("Reverse Moving ")
-    GPIO.output(right_motor_a,GPIO.LOW)
-    GPIO.output(right_motor_b,GPIO.HIGH)
-    GPIO.output(left_motor_a,GPIO.LOW)
-    GPIO.output(left_motor_b,GPIO.HIGH)
+def backward(second):
+    print("Moving Backward")
+    # Reverse all motors
+    GPIO.output(front_left_a, GPIO.LOW)
+    GPIO.output(front_left_b, GPIO.HIGH)
+    GPIO.output(back_left_a, GPIO.LOW)
+    GPIO.output(back_left_b, GPIO.HIGH)
+    
+    GPIO.output(front_right_a, GPIO.LOW)
+    GPIO.output(front_right_b, GPIO.HIGH)
+    GPIO.output(back_right_a, GPIO.LOW)
+    GPIO.output(back_right_b, GPIO.HIGH)
     time.sleep(second)
 
+def strafe_left(second):
+    print("Strafing Left")
+    # Motors configuration for moving left (front left and back right reverse, front right and back left forward)
+    GPIO.output(front_left_a, GPIO.LOW)
+    GPIO.output(front_left_b, GPIO.HIGH)
+    GPIO.output(back_right_a, GPIO.LOW)
+    GPIO.output(back_right_b, GPIO.HIGH)
 
-def right(second):
-    print("Left Moving ")
-    GPIO.output(right_motor_a,GPIO.LOW)
-    GPIO.output(right_motor_b,GPIO.HIGH)
-    GPIO.output(left_motor_a,GPIO.HIGH)
-    GPIO.output(left_motor_b,GPIO.LOW)
+    GPIO.output(front_right_a, GPIO.HIGH)
+    GPIO.output(front_right_b, GPIO.LOW)
+    GPIO.output(back_left_a, GPIO.HIGH)
+    GPIO.output(back_left_b, GPIO.LOW)
     time.sleep(second)
 
-def left(second):
-    print("Right Moving ")
-    GPIO.output(right_motor_a,GPIO.HIGH)
-    GPIO.output(right_motor_b,GPIO.LOW)
-    GPIO.output(left_motor_a,GPIO.LOW)
-    GPIO.output(left_motor_b,GPIO.HIGH)
+def strafe_right(second):
+    print("Strafing Right")
+    # Motors configuration for moving right (front left and back right forward, front right and back left reverse)
+    GPIO.output(front_left_a, GPIO.HIGH)
+    GPIO.output(front_left_b, GPIO.LOW)
+    GPIO.output(back_right_a, GPIO.HIGH)
+    GPIO.output(back_right_b, GPIO.LOW)
+
+    GPIO.output(front_right_a, GPIO.LOW)
+    GPIO.output(front_right_b, GPIO.HIGH)
+    GPIO.output(back_left_a, GPIO.LOW)
+    GPIO.output(back_left_b, GPIO.HIGH)
     time.sleep(second)
 
-def stop():
+def stop_all():
     print("Stopping Motors")
-    pwm_r.ChangeDutyCycle(0)
-    pwm_l.ChangeDutyCycle(0)
+    pwm_fl.ChangeDutyCycle(0)
+    pwm_bl.ChangeDutyCycle(0)
+    pwm_fr.ChangeDutyCycle(0)
+    pwm_br.ChangeDutyCycle(0)
 
-def exit_():
+def cleanup():
+    print("Cleaning up GPIO")
     GPIO.cleanup()
 
+# Main function to test movements
 def main():
     forward(2)
-    reverse(2)
-    left(2)
-    right(2)
-    stop()
-    exit_()
+    stop_all()
+    time.sleep(1)
+    
+    backward(2)
+    stop_all()
+    time.sleep(1)
+    
+    strafe_left(2)
+    stop_all()
+    time.sleep(1)
+    
+    strafe_right(2)
+    stop_all()
+    time.sleep(1)
+    
+    cleanup()
 
 if __name__ == '__main__':
     main()
