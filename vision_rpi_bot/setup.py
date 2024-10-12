@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'vision_rpi_bot'
+package_name = 'whag_bot'
 
 setup(
     name=package_name,
@@ -20,8 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'publisher_node = vision_rpi_bot.publisher:main',
-            'subscriber_node = vision_rpi_bot.subscriber:main',
+            'publisher_node = whag_bot.publisher:main',
+            'subscriber_node = whag_bot.subscriber:main',
         ],
     },
 )
