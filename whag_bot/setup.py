@@ -22,6 +22,7 @@ setup(
         'console_scripts': [
             'publisher_node = whag_bot.publisher:main',
             'subscriber_node = whag_bot.subscriber:main',
+            'omni_teleop = whag_bot.omni_teleop:main',
         ],
     },
 )
