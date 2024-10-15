@@ -1,0 +1,31 @@
+joy_node:
+  ros__parameters:
+    device_id: 0
+    deadzone: 0.13
+    autorepeat_rate: 20.0
+
+# ... below the joy parameters
+
+teleop_node:
+  ros__parameters:
+    
+    axis_linear:  # Left thumb stick vertical (forward/backward) 
+      x: 1   # Move forward/backward (linear.x)
+      y: 6   # Strafe left/right (linear.y) 
+    scale_linear:
+      x: 0.5  # Scaling for forward/backward
+      y: 0.5  # Scaling for strafing
+    scale_linear_turbo:
+      x: 1.0  # Turbo scaling for forward/backward
+      y: 1.0  # Turbo scaling for strafing
+
+    axis_angular:  # Left thumb stick horizontal
+      yaw: 0
+    scale_angular:
+      yaw: 0.5
+    scale_angular_turbo:
+      yaw: 1.0
+
+    require_enable_button: true
+    enable_button: 4  # Left shoulder button
+    enable_turbo_button: 5  # Right shoulder button
