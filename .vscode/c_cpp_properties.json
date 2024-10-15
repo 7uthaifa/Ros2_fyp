@@ -1,0 +1,28 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/user/turtlebot3_ws/install/turtlebot3_gazebo/include/**",
+        "/home/user/turtlebot3_ws/install/turtlebot3_fake_node/include/**",
+        "/home/user/ros2_ws3/install/my_robot3_interfaces/include/**",
+        "/home/user/ros2_ws2/install/my_robot3_interfaces/include/**",
+        "/home/user/ros2_ws2/install/my_robot2_interfaces/include/**",
+        "/home/user/ros2_ws/install/my_robot_interfaces/include/**",
+        "/opt/ros/humble/include/**",
+        "/home/user/fyp_ws/src/Ros2_fyp/whag_bot_joystick/include/**",
+        "/home/user/fyp_ws/src/Ros2_fyp/whag_description/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- <xacro:property name="base_length" value="0.6" />
+    <xacro:property name="base_width" value="0.4" />
+    <xacro:property name="base_height" value="0.2" />
+    <xacro:property name="wheel_radius" value="0.1" />
+    <xacro:property name="wheel_length" value="0.05" /> -->
+
+    <xacro:include filename="base.xacro"/>
+    <xacro:include filename="pillar.xacro"/>
+    <xacro:include filename="motor.xacro"/>
+    <xacro:include filename="wheel.xacro"/>
+
+    <link name="world_link" />
+
+    <xacro:robot_base parent="world_link" child="first_base_link" xyz="0 0 0.075" rpy="0 0 0" />
+    <xacro:robot_base parent="first_base_link" child="second_base_link" xyz="0 0 0.03" rpy="0 0 0" />
+
+    <xacro:robot_pillar parent="first_base_link" child="first_front_left_pillar_link" xyz="0.11 0.065 0.006" rpy="0 0 0" />
+    <xacro:robot_pillar parent="first_base_link" child="first_front_right_pillar_link" xyz="0.11 -0.065 0.006" rpy="0 0 0" />
+    <xacro:robot_pillar parent="first_base_link" child="first_back_left_pillar_link" xyz="-0.11 0.065 0.006" rpy="0 0 0" />
+    <xacro:robot_pillar parent="first_base_link" child="first_back_right_pillar_link" xyz="-0.11 -0.065 0.006" rpy="0 0 0" />
+
+    <xacro:robot_motor parent="first_base_link" child="front_left_motor_link" xyz="0.10 0.040 -0.025" rpy="0 0 0" />
+    <xacro:robot_motor parent="first_base_link" child="front_right_motor_link" xyz="0.10 -0.040 -0.025" rpy="0 0 0" />
+    <xacro:robot_motor parent="first_base_link" child="back_left_motor_link" xyz="-0.10 0.040 -0.025" rpy="0 0 0" />
+    <xacro:robot_motor parent="first_base_link" child="back_right_motor_link" xyz="-0.10 -0.040 -0.025" rpy="0 0 0" />
+
+    <xacro:wheel parent="front_left_motor_link" child="front_left_wheel_link" xyz="0.0 0.060 -0.015" rpy="1.57 0 0" />
+    <xacro:wheel parent="front_right_motor_link" child="front_right_wheel_link" xyz="0.0 -0.060 -0.015" rpy="1.57 0 0" />
+    <xacro:wheel parent="back_left_motor_link" child="back_left_wheel_link" xyz="0.0 0.060 -0.015" rpy="1.57 0 0"  />
+    <xacro:wheel parent="back_right_motor_link" child="back_right_wheel_link" xyz="0.0 -0.060 -0.015" rpy="1.57 0 0" />
+
+
+</robot>
